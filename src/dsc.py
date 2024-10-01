@@ -1,5 +1,6 @@
 import torch.nn as nn
 
+
 class DSC(nn.Module):
     def __init__(self, c_in, c_out, k_size=3, stride=1, padding=1):
         super(DSC, self).__init__()
@@ -9,9 +10,10 @@ class DSC(nn.Module):
         self.pw = nn.Conv2d(c_in, c_out, 1, 1)
 
     def forward(self, x):
-        out = self.dw(x)
+        out = self.dw(x)  # they use dw with same size of k_size and padding to perform patch partition and linear embeding
         out = self.pw(out)
         return out
+
 
 class IDSC(nn.Module):
     def __init__(self, c_in, c_out, k_size=3, stride=1, padding=1):

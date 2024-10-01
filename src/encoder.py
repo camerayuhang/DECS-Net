@@ -27,12 +27,12 @@ class Encoder(nn.Module):
 
     def forward(self, x):
         # cnn
-        cnn = self.init_CNN(x)
-        cnn = self.maxp(cnn)
+        cnn = self.init_CNN(x)  # 2 x downsampling
+        cnn = self.maxp(cnn)  # 2 x downsampling
         cnn1 = self.layer1(cnn)
-        cnn2 = self.layer2(cnn1)
-        cnn3 = self.layer3(cnn2)
-        cnn4 = self.layer4(cnn3)
+        cnn2 = self.layer2(cnn1)  # 2 x downsampling
+        cnn3 = self.layer3(cnn2)  # 2 x downsampling
+        cnn4 = self.layer4(cnn3)  # 2 x downsampling
 
         # transformer
         t1, t2, t3, out = self.transformer(x)
@@ -49,4 +49,3 @@ if __name__ == '__main__':
     x = torch.rand(2, 3, 256, 256).cuda()
     net = Encoder(3, 64, 256, 4, 'resnet34', True, [64, 128, 256, 512], [64, 128, 256, 512]).cuda()
     out = net(x)
-
